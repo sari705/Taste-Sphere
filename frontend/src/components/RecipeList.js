@@ -12,6 +12,8 @@ const RecipeList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate(); // נביגציה לדף אחר
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
 
     // סינון מתכונים
@@ -41,7 +43,7 @@ const RecipeList = () => {
             }
 
             const response = await axios.put(
-                `http://localhost:5000/api/recipes/${id}/like`,
+                `${backendUrl}/api/recipes/${id}/like`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -98,7 +100,7 @@ const RecipeList = () => {
 
                             >
                                 <img
-                                    src={recipe.image_url}
+                                    src={recipe.image_url   }
                                     alt={recipe.title}
                                     className="card-img-top"
                                     style={{
@@ -110,7 +112,7 @@ const RecipeList = () => {
                                     }}
                                     onClick={() => navigate(`/recipes/${recipe._id}`)} // ניווט בלחיצה על הכרטיס
                                 />
-                                {console.log('Image URL:', `http://localhost:5000${recipe.image_url}`)}
+                                {console.log('Image URL:', `${backendUrl}${recipe.image_url}`)}
                                 <div className="card-body">
                                     <h5 className="card-title text-truncate" title={recipe.title}>
                                         {recipe.title}

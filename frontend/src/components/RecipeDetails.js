@@ -8,11 +8,13 @@ const RecipeDetails = () => {
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/recipes/${id}`);
+                const response = await axios.get(`${backendUrl}/api/recipes/${id}`);
                 setRecipe(response.data);
             } catch (err) {
                 console.error('Error fetching recipe:', err.response || err.message);
@@ -27,7 +29,7 @@ const RecipeDetails = () => {
         if (window.confirm('Are you sure you want to delete this recipe?')) {
             try {
                 const token = localStorage.getItem('token');
-                await axios.delete(`http://localhost:5000/api/recipes/${id}`, {
+                await axios.delete(`${backendUrl}/api/recipes/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 alert('Recipe deleted successfully!');

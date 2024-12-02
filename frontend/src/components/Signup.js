@@ -9,6 +9,8 @@ const Signup = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,7 +20,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/users/signup', formData);
+            const response = await axios.post(`${backendUrl}/api/users/signup`, formData);
             setSuccess('Signup successful! You can now log in.');
             setError('');
         } catch (err) {

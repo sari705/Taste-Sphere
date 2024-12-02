@@ -18,6 +18,8 @@ const MyRecipes = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate();
     const editFormRef = useRef(null);
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
 
 
@@ -26,7 +28,7 @@ const MyRecipes = () => {
         const fetchMyRecipes = async () => {
             try {
                 const token = localStorage.getItem('token'); // שליפת הטוקן מה-localStorage
-                const response = await axios.get('http://localhost:5000/api/recipes/my-recipes', {
+                const response = await axios.get(`${backendUrl}/api/recipes/my-recipes`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setRecipes(response.data);
@@ -48,7 +50,7 @@ const MyRecipes = () => {
         try {
             const token = localStorage.getItem('token'); // ודאי שהטוקן קיים
 
-            await axios.delete(`http://localhost:5000/api/recipes/${recipeToDelete}`, {
+            await axios.delete(`${backendUrl}/api/recipes/${recipeToDelete}`, {
                 headers: {
                     Authorization: `Bearer ${token}`, // הוספת הטוקן לכותרת
                 },
@@ -86,7 +88,7 @@ const MyRecipes = () => {
 
             // עדכון המתכון
             const response = await axios.put(
-                `http://localhost:5000/api/recipes/${editingRecipe._id}`,
+                `${backendUrl}/api/recipes/${editingRecipe._id}`,
                 { ...editingRecipe, image_url: imageUrl },
                 {
                     headers: { Authorization: `Bearer ${token}` },

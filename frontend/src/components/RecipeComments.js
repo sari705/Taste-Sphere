@@ -6,13 +6,15 @@ const RecipeComments = ({ recipeId }) => {
     const [newComment, setNewComment] = useState("");
     const [showComments, setShowComments] = useState(false); // מצב להצגת התגובות
     const [loading, setLoading] = useState(false);
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     // שליפת התגובות מהשרת
     useEffect(() => {
         const fetchComments = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`http://localhost:5000/api/recipes/${recipeId}/comments`);
+                const response = await axios.get(`${backendUrl}/api/recipes/${recipeId}/comments`);
                 setComments(response.data);
             } catch (err) {
                 console.error("Error fetching comments:", err.response || err.message);
@@ -34,7 +36,7 @@ const RecipeComments = ({ recipeId }) => {
             }
 
             const response = await axios.post(
-                `http://localhost:5000/api/recipes/${recipeId}/comments`,
+                `${backendUrl}/api/recipes/${recipeId}/comments`,
                 { content: newComment },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

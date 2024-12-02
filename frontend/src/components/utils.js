@@ -15,10 +15,12 @@ export const filterRecipes = (recipes, searchTerm, selectedCategory) => {
 // העלאת תמונה לשרת
 export const uploadImage = async (imageFile, token) => {
     const formData = new FormData();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
     formData.append('image', imageFile);
 
     const response = await axios.post(
-        'http://localhost:5000/api/recipes/upload',
+        `${backendUrl}/api/recipes/upload`,
         formData,
         {
             headers: { Authorization: `Bearer ${token}` },

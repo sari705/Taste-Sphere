@@ -13,6 +13,8 @@ const RecipeForm = () => {
     });
     const [previewImage, setPreviewImage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -53,7 +55,7 @@ const RecipeForm = () => {
                 formDataImage.append('image', formData.image);
 
                 const uploadResponse = await axios.post(
-                    'http://localhost:5000/api/recipes/upload',
+                    `${backendUrl}/api/recipes/upload`,
                     formDataImage,
                     {
                         headers: {
@@ -63,7 +65,7 @@ const RecipeForm = () => {
                     }
                 );
 
-                imageUrl = `http://localhost:5000${uploadResponse.data.filePath}`;
+                imageUrl = `${backendUrl}${uploadResponse.data.filePath}`;
                 console.log("image url: " + imageUrl);
             }
 
@@ -88,7 +90,7 @@ const RecipeForm = () => {
                 is_public: formData.is_public,
             };
 
-            await axios.post('http://localhost:5000/api/recipes', recipeData, {
+            await axios.post(`${backendUrl}/api/recipes`, recipeData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

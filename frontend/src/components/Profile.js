@@ -6,13 +6,15 @@ const Profile = () => {
     const [formData, setFormData] = useState({ name: '', password: '' }); // טופס לעדכון
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     useEffect(() => {
         // קבלת פרטי המשתמש המחובר
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/api/users/profile', {
+                const response = await axios.get(`${backendUrl}/api/users/profile`, {
                     headers: { Authorization: token },
                 });
                 setUser(response.data);
@@ -34,7 +36,7 @@ const Profile = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.put('http://localhost:5000/api/users/profile', formData, {
+            const response = await axios.put(`${backendUrl}/api/users/profile`, formData, {
                 headers: { Authorization: token },
             });
             setUser(response.data);
