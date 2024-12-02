@@ -11,7 +11,11 @@ dotenv.config();
 const app = express();
 
 // שימוש ב-CORS
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors(
+  {origin: 'http://localhost:3000', // דומיין ה-frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // שיטות מותרות
+  allowedHeaders: ['Content-Type', 'Authorization']
+})) // כותרות מותרות }));
 
 // Middleware לעבודה עם JSON
 app.use(express.json());
